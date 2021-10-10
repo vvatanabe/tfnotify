@@ -20,7 +20,7 @@ type PullRequest struct {
 	Number   int
 }
 
-func circleci() (ci CI, err error) {
+func Circleci() (ci CI, err error) {
 	ci.PR.Number = 0
 	ci.PR.Revision = os.Getenv("CIRCLE_SHA1")
 	ci.URL = os.Getenv("CIRCLE_BUILD_URL")
@@ -42,7 +42,7 @@ func circleci() (ci CI, err error) {
 	return ci, nil
 }
 
-func travisci() (ci CI, err error) {
+func Travisci() (ci CI, err error) {
 	ci.URL = os.Getenv("TRAVIS_BUILD_WEB_URL")
 	prNumber := os.Getenv("TRAVIS_PULL_REQUEST")
 	if prNumber == "false" {
@@ -55,7 +55,7 @@ func travisci() (ci CI, err error) {
 	return ci, err
 }
 
-func codebuild() (ci CI, err error) {
+func Codebuild() (ci CI, err error) {
 	ci.PR.Number = 0
 	ci.PR.Revision = os.Getenv("CODEBUILD_RESOLVED_SOURCE_VERSION")
 	ci.URL = os.Getenv("CODEBUILD_BUILD_URL")
@@ -74,13 +74,13 @@ func codebuild() (ci CI, err error) {
 	return ci, err
 }
 
-func teamcity() (ci CI, err error) {
+func Teamcity() (ci CI, err error) {
 	ci.PR.Revision = os.Getenv("BUILD_VCS_NUMBER")
 	ci.PR.Number, err = strconv.Atoi(os.Getenv("BUILD_NUMBER"))
 	return ci, err
 }
 
-func drone() (ci CI, err error) {
+func Drone() (ci CI, err error) {
 	ci.PR.Number = 0
 	ci.PR.Revision = os.Getenv("DRONE_COMMIT_SHA")
 	ci.URL = os.Getenv("DRONE_BUILD_LINK")
@@ -92,7 +92,7 @@ func drone() (ci CI, err error) {
 	return ci, err
 }
 
-func jenkins() (ci CI, err error) {
+func Jenkins() (ci CI, err error) {
 	ci.PR.Number = 0
 	ci.PR.Revision = os.Getenv("GIT_COMMIT")
 	if ci.PR.Revision == "" {
@@ -117,7 +117,7 @@ func jenkins() (ci CI, err error) {
 	return ci, err
 }
 
-func gitlabci() (ci CI, err error) {
+func Gitlabci() (ci CI, err error) {
 	ci.PR.Number = 0
 	ci.PR.Revision = os.Getenv("CI_COMMIT_SHA")
 	ci.URL = os.Getenv("CI_JOB_URL")
@@ -137,7 +137,7 @@ func gitlabci() (ci CI, err error) {
 	return ci, err
 }
 
-func githubActions() (ci CI, err error) {
+func GithubActions() (ci CI, err error) {
 	ci.URL = fmt.Sprintf(
 		"https://github.com/%s/actions/runs/%s",
 		os.Getenv("GITHUB_REPOSITORY"),
@@ -147,7 +147,7 @@ func githubActions() (ci CI, err error) {
 	return ci, err
 }
 
-func cloudbuild() (ci CI, err error) {
+func Cloudbuild() (ci CI, err error) {
 	ci.PR.Number = 0
 	ci.PR.Revision = os.Getenv("COMMIT_SHA")
 	ci.URL = fmt.Sprintf(
