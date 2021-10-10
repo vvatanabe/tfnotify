@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/mercari/tfnotify/terraform"
+	"github.com/vvatanabe/tfnotify/terraform"
 )
 
 // NotifyService handles notification process.
