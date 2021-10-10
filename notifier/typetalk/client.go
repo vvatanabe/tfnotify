@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/mercari/tfnotify/terraform"
 	typetalk "github.com/nulab/go-typetalk/typetalk/v1"
+	"github.com/vvatanabe/tfnotify/terraform"
 )
 
 // EnvToken is Typetalk API Token

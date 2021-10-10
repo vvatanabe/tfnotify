@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/lestrrat-go/slack/objects"
-	"github.com/mercari/tfnotify/terraform"
+	"github.com/vvatanabe/tfnotify/terraform"
 )
 
 func TestNotify(t *testing.T) {

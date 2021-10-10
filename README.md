@@ -32,7 +32,7 @@ Grab the binary from GitHub Releases (Recommended)
 or
 
 ```console
-$ go get -u github.com/mercari/tfnotify
+$ go get -u github.com/vvatanabe/tfnotify
 ```
 
 
@@ -400,18 +400,14 @@ GitHub private repositories require the `repo` and `write:discussion` permission
   - `terraform plan`: Pull request
   - `terraform apply`: Push to branch
 
-## Committers
-
- * Masaki ISHIYAMA ([@b4b4r07](https://github.com/b4b4r07))
-
-## Contribution
-
-Please read the CLA below carefully before submitting your contribution.
-
-https://www.mercari.com/cla/
-
 ## License
+
+### Origin
 
 Copyright 2018 Mercari, Inc.
 
 Licensed under the MIT License.
+
+### Forked
+
+MIT
