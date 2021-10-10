@@ -136,7 +136,7 @@ func TestCircleci(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := circleci()
+		ci, err := Circleci()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -203,7 +203,7 @@ func TestTravisCI(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := travisci()
+		ci, err := Travisci()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -267,7 +267,7 @@ func TestTeamCityCI(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := teamcity()
+		ci, err := Teamcity()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -379,7 +379,7 @@ func TestCodeBuild(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := codebuild()
+		ci, err := Codebuild()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -460,7 +460,7 @@ func TestDrone(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := drone()
+		ci, err := Drone()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -545,7 +545,7 @@ func TestJenkins(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := jenkins()
+		ci, err := Jenkins()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -612,7 +612,7 @@ func TestJenkinsGitLab(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := jenkins()
+		ci, err := Jenkins()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -698,7 +698,7 @@ func TestGitLabCI(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := gitlabci()
+		ci, err := Gitlabci()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -750,7 +750,7 @@ func TestGitHubActions(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := githubActions()
+		ci, err := GithubActions()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}
@@ -836,7 +836,7 @@ func TestCloudBuild(t *testing.T) {
 
 	for _, testCase := range testCases {
 		testCase.fn()
-		ci, err := cloudbuild()
+		ci, err := Cloudbuild()
 		if !reflect.DeepEqual(ci, testCase.ci) {
 			t.Errorf("got %q but want %q", ci, testCase.ci)
 		}

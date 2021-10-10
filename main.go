@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/urfave/cli"
 	"github.com/vvatanabe/tfnotify/config"
 	"github.com/vvatanabe/tfnotify/notifier"
 	"github.com/vvatanabe/tfnotify/notifier/github"
@@ -12,8 +13,6 @@ import (
 	"github.com/vvatanabe/tfnotify/notifier/slack"
 	"github.com/vvatanabe/tfnotify/notifier/typetalk"
 	"github.com/vvatanabe/tfnotify/terraform"
-
-	"github.com/urfave/cli"
 )
 
 const (
@@ -43,47 +42,47 @@ func (t *tfnotify) Run() error {
 	var err error
 	switch ciname {
 	case "circleci", "circle-ci":
-		ci, err = circleci()
+		ci, err = Circleci()
 		if err != nil {
 			return err
 		}
 	case "travis", "travisci", "travis-ci":
-		ci, err = travisci()
+		ci, err = Travisci()
 		if err != nil {
 			return err
 		}
 	case "codebuild":
-		ci, err = codebuild()
+		ci, err = Codebuild()
 		if err != nil {
 			return err
 		}
 	case "teamcity":
-		ci, err = teamcity()
+		ci, err = Teamcity()
 		if err != nil {
 			return err
 		}
 	case "drone":
-		ci, err = drone()
+		ci, err = Drone()
 		if err != nil {
 			return err
 		}
 	case "jenkins":
-		ci, err = jenkins()
+		ci, err = Jenkins()
 		if err != nil {
 			return err
 		}
 	case "gitlabci", "gitlab-ci":
-		ci, err = gitlabci()
+		ci, err = Gitlabci()
 		if err != nil {
 			return err
 		}
 	case "github-actions":
-		ci, err = githubActions()
+		ci, err = GithubActions()
 		if err != nil {
 			return err
 		}
 	case "cloud-build", "cloudbuild":
-		ci, err = cloudbuild()
+		ci, err = Cloudbuild()
 		if err != nil {
 			return err
 		}
