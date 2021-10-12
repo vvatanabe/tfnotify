@@ -209,7 +209,7 @@ func (t *tfnotify) Run() error {
 		return fmt.Errorf("no notifier specified at all")
 	}
 
-	return NewExitError(notifier.Notify(tee(os.Stdin, os.Stdout)))
+	return NewExitError(notifier.Notify(Tee(os.Stdin, os.Stdout)))
 }
 
 func main() {

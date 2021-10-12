@@ -8,7 +8,7 @@ import (
 	"github.com/mattn/go-colorable"
 )
 
-func tee(stdin io.Reader, stdout io.Writer) string {
+func Tee(stdin io.Reader, stdout io.Writer) string {
 	var b1 bytes.Buffer
 	var b2 bytes.Buffer
 

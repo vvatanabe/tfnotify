@@ -28,7 +28,7 @@ func TestTee(t *testing.T) {
 
 	for _, testCase := range testCases {
 		stdout := new(bytes.Buffer)
-		body := tee(testCase.stdin, stdout)
+		body := Tee(testCase.stdin, stdout)
 		if body != testCase.body {
 			t.Errorf("got %q but want %q", body, testCase.body)
 		}
