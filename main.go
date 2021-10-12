@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli"
 	"github.com/vvatanabe/tfnotify/config"
 	"github.com/vvatanabe/tfnotify/notifier"
+	"github.com/vvatanabe/tfnotify/notifier/backlog"
 	"github.com/vvatanabe/tfnotify/notifier/github"
 	"github.com/vvatanabe/tfnotify/notifier/gitlab"
 	"github.com/vvatanabe/tfnotify/notifier/slack"
@@ -171,6 +172,25 @@ func (t *tfnotify) Run() error {
 			TopicID:  t.config.Notifier.Typetalk.TopicID,
 			Title:    t.context.String("title"),
 			Message:  t.context.String("message"),
+			CI:       ci.URL,
+			Parser:   t.parser,
+			Template: t.template,
+		})
+		if err != nil {
+			return err
+		}
+		notifier = client.Notify
+	case "backlog":
+		client, err := backlog.NewClient(backlog.Config{
+			APIKey:  t.config.Notifier.Backlog.APIKey,
+			BaseURL: t.config.Notifier.Backlog.BaseURL,
+			Project: t.config.Notifier.Backlog.Repository.Project,
+			Repo:    t.config.Notifier.Backlog.Repository.Name,
+			PR: backlog.PullRequest{
+				Number:  ci.PR.Number,
+				Title:   t.context.String("title"),
+				Message: t.context.String("message"),
+			},
 			CI:       ci.URL,
 			Parser:   t.parser,
 			Template: t.template,

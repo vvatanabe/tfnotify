@@ -25,6 +25,7 @@ type Notifier struct {
 	Gitlab   GitlabNotifier   `yaml:"gitlab"`
 	Slack    SlackNotifier    `yaml:"slack"`
 	Typetalk TypetalkNotifier `yaml:"typetalk"`
+	Backlog  BacklogNotifier  `yaml:"backlog"`
 }
 
 // GithubNotifier is a notifier for GitHub
@@ -58,6 +59,19 @@ type SlackNotifier struct {
 type TypetalkNotifier struct {
 	Token   string `yaml:"token"`
 	TopicID string `yaml:"topic_id"`
+}
+
+// BacklogNotifier is a notifier for Backlog
+type BacklogNotifier struct {
+	APIKey     string            `yaml:"api_key"`
+	BaseURL    string            `yaml:"base_url"`
+	Repository BacklogRepository `yaml:"repository"`
+}
+
+// BacklogRepository represents a Backlog repository
+type BacklogRepository struct {
+	Project string `yaml:"project"`
+	Name    string `yaml:"name"`
 }
 
 // Terraform represents terraform configurations
@@ -177,6 +191,14 @@ func (cfg *Config) Validation() error {
 			return fmt.Errorf("Typetalk topic id is missing")
 		}
 	}
+	if cfg.isDefinedBacklog() {
+		if cfg.Notifier.Backlog.Repository.Project == "" {
+			return fmt.Errorf("repository project is missing")
+		}
+		if cfg.Notifier.Backlog.Repository.Name == "" {
+			return fmt.Errorf("repository name is missing")
+		}
+	}
 	notifier := cfg.GetNotifierType()
 	if notifier == "" {
 		return fmt.Errorf("notifier is missing")
@@ -204,6 +226,11 @@ func (cfg *Config) isDefinedTypetalk() bool {
 	return cfg.Notifier.Typetalk != (TypetalkNotifier{})
 }
 
+func (cfg *Config) isDefinedBacklog() bool {
+	// not empty
+	return cfg.Notifier.Backlog != (BacklogNotifier{})
+}
+
 // GetNotifierType return notifier type described in Config
 func (cfg *Config) GetNotifierType() string {
 	if cfg.isDefinedGithub() {
@@ -217,6 +244,9 @@ func (cfg *Config) GetNotifierType() string {
 	}
 	if cfg.isDefinedTypetalk() {
 		return "typetalk"
+	}
+	if cfg.isDefinedBacklog() {
+		return "backlog"
 	}
 	return ""
 }
