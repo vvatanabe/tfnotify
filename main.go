@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli"
 	cipkg "github.com/vvatanabe/tfnotify/ci"
 	"github.com/vvatanabe/tfnotify/config"
+	"github.com/vvatanabe/tfnotify/errors"
 	"github.com/vvatanabe/tfnotify/notifier"
 	"github.com/vvatanabe/tfnotify/notifier/backlog"
 	"github.com/vvatanabe/tfnotify/notifier/github"
@@ -210,7 +211,7 @@ func (t *tfnotify) Run() error {
 		return fmt.Errorf("no notifier specified at all")
 	}
 
-	return NewExitError(notifier.Notify(Tee(os.Stdin, os.Stdout)))
+	return errors.NewExitError(notifier.Notify(Tee(os.Stdin, os.Stdout)))
 }
 
 func main() {
@@ -280,7 +281,7 @@ func main() {
 	}
 
 	err := app.Run(os.Args)
-	os.Exit(HandleExit(err))
+	os.Exit(errors.HandleExit(err))
 }
 
 func newConfig(ctx *cli.Context) (cfg config.Config, err error) {
