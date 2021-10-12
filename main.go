@@ -9,6 +9,7 @@ import (
 	cipkg "github.com/vvatanabe/tfnotify/ci"
 	"github.com/vvatanabe/tfnotify/config"
 	"github.com/vvatanabe/tfnotify/errors"
+	"github.com/vvatanabe/tfnotify/io"
 	"github.com/vvatanabe/tfnotify/notifier"
 	"github.com/vvatanabe/tfnotify/notifier/backlog"
 	"github.com/vvatanabe/tfnotify/notifier/github"
@@ -211,7 +212,7 @@ func (t *tfnotify) Run() error {
 		return fmt.Errorf("no notifier specified at all")
 	}
 
-	return errors.NewExitError(notifier.Notify(Tee(os.Stdin, os.Stdout)))
+	return errors.NewExitError(notifier.Notify(io.Tee(os.Stdin, os.Stdout)))
 }
 
 func main() {
