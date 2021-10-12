@@ -41,6 +41,14 @@ func TestLoadFile(t *testing.T) {
 						Token:   "",
 						TopicID: "",
 					},
+					Backlog: BacklogNotifier{
+						APIKey:  "",
+						BaseURL: "",
+						Repository: BacklogRepository{
+							Project: "",
+							Name:    "",
+						},
+					},
 				},
 				Terraform: Terraform{
 					Default: Default{
@@ -82,6 +90,14 @@ func TestLoadFile(t *testing.T) {
 					Typetalk: TypetalkNotifier{
 						Token:   "",
 						TopicID: "",
+					},
+					Backlog: BacklogNotifier{
+						APIKey:  "",
+						BaseURL: "",
+						Repository: BacklogRepository{
+							Project: "",
+							Name:    "",
+						},
 					},
 				},
 				Terraform: Terraform{
@@ -136,6 +152,14 @@ func TestLoadFile(t *testing.T) {
 					Typetalk: TypetalkNotifier{
 						Token:   "",
 						TopicID: "",
+					},
+					Backlog: BacklogNotifier{
+						APIKey:  "",
+						BaseURL: "",
+						Repository: BacklogRepository{
+							Project: "",
+							Name:    "",
+						},
 					},
 				},
 				Terraform: Terraform{
@@ -354,6 +378,53 @@ notifier:
 `),
 			expected: "",
 		},
+		{
+			contents: []byte(`
+ci: jenkins
+notifier:
+  backlog:
+`),
+			expected: "notifier is missing",
+		},
+		{
+			contents: []byte(`
+ci: jenkins
+notifier:
+  backlog:
+    api_key: token
+    base_url: https://foo.backlog.com
+    repository:
+      project: BAR
+      name: baz
+`),
+			expected: "",
+		},
+		{
+			contents: []byte(`
+ci: jenkins
+notifier:
+  backlog:
+    api_key: token
+    base_url: https://foo.backlog.com
+    repository:
+      project:
+      name: baz
+`),
+			expected: "repository project is missing",
+		},
+		{
+			contents: []byte(`
+ci: jenkins
+notifier:
+  backlog:
+    api_key: token
+    base_url: https://foo.backlog.com
+    repository:
+      project: BAZ
+      name:
+`),
+			expected: "repository name is missing",
+		},
 	}
 	for _, testCase := range testCases {
 		cfg, err := helperLoadConfig(testCase.contents)
@@ -393,6 +464,10 @@ func TestGetNotifierType(t *testing.T) {
 		{
 			contents: []byte("repository:\n  owner: a\n  name: b\nci: gitlabci\nnotifier:\n  gitlab:\n    token: token\n"),
 			expected: "gitlab",
+		},
+		{
+			contents: []byte("repository:\n  project: a\n  name: b\nci: jenkins\nnotifier:\n  backlog:\n    api_key: token\n"),
+			expected: "backlog",
 		},
 	}
 	for _, testCase := range testCases {
