@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/urfave/cli"
+	cipkg "github.com/vvatanabe/tfnotify/ci"
 	"github.com/vvatanabe/tfnotify/config"
 	"github.com/vvatanabe/tfnotify/notifier"
 	"github.com/vvatanabe/tfnotify/notifier/backlog"
@@ -39,51 +40,51 @@ func (t *tfnotify) Run() error {
 		ciname = t.context.GlobalString("ci")
 	}
 	ciname = strings.ToLower(ciname)
-	var ci CI
+	var ci cipkg.CI
 	var err error
 	switch ciname {
 	case "circleci", "circle-ci":
-		ci, err = Circleci()
+		ci, err = cipkg.Circleci()
 		if err != nil {
 			return err
 		}
 	case "travis", "travisci", "travis-ci":
-		ci, err = Travisci()
+		ci, err = cipkg.Travisci()
 		if err != nil {
 			return err
 		}
 	case "codebuild":
-		ci, err = Codebuild()
+		ci, err = cipkg.Codebuild()
 		if err != nil {
 			return err
 		}
 	case "teamcity":
-		ci, err = Teamcity()
+		ci, err = cipkg.Teamcity()
 		if err != nil {
 			return err
 		}
 	case "drone":
-		ci, err = Drone()
+		ci, err = cipkg.Drone()
 		if err != nil {
 			return err
 		}
 	case "jenkins":
-		ci, err = Jenkins()
+		ci, err = cipkg.Jenkins()
 		if err != nil {
 			return err
 		}
 	case "gitlabci", "gitlab-ci":
-		ci, err = Gitlabci()
+		ci, err = cipkg.Gitlabci()
 		if err != nil {
 			return err
 		}
 	case "github-actions":
-		ci, err = GithubActions()
+		ci, err = cipkg.GithubActions()
 		if err != nil {
 			return err
 		}
 	case "cloud-build", "cloudbuild":
-		ci, err = Cloudbuild()
+		ci, err = cipkg.Cloudbuild()
 		if err != nil {
 			return err
 		}
